@@ -6,7 +6,7 @@ using WebAPI_NN.Model;
 
 namespace WebAPI_NN.Repositories
 {
-    interface IBudgetRepository
+    public interface IBudgetRepository
     {
         Task<IEnumerable<Budget>> GetBudgets();
         Task<Budget> GetBudget(int id);
@@ -14,5 +14,7 @@ namespace WebAPI_NN.Repositories
         Task<Budget> CreateBudget(Budget budget, int id);
         Task DeleteBudget(int id);
         Task<IEnumerable<BudgetType>> GetBudgetTypes();
+
+        Task<double> GetPrediction(int id, Budget budget);
     }
 }
