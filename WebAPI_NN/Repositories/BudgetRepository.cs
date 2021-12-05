@@ -136,10 +136,9 @@ namespace WebAPI_NN.Repositories
                     if (budget.AddedData < Budget_Month_income.AddedData) continue;
                     OutcomesData[i] += budget.Amount;
                 }
-                OutcomesData[i] /= IncomeBudget;
+                //OutcomesData[i] /= IncomeBudget;
                 if (++i >= OutcomesData.Count) break;
             }
-
 
             return OutcomesData;
         }
@@ -149,11 +148,14 @@ namespace WebAPI_NN.Repositories
             Budget NewBudget;
             try
             {
+                Console.WriteLine($"Try add new budget {'{'} {newBudget.Id} , {newBudget.Description} , {newBudget.Amount} , {newBudget.AddedData} {'}'}");
                 NewBudget = await CreateBudget(newBudget, id);
+                Console.WriteLine($"Added new budget");
                 if (NewBudget == null) return -201;
             }
             catch (Exception)
             {
+                Console.WriteLine($"ERROR with adding new budget");
                 return -101;
             }
             
