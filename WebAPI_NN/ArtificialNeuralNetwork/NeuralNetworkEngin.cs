@@ -32,7 +32,7 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
 
         public string test()
         {
-            return $"{MacierzWag[0].ToString()}";
+            return $"What we have - {MacierzWag[0][0][0]}  || What shuld -0,00371127113448067";
         }
 
         private void WybierzFunkcjeAktywacji(string nazwaFunkcji)

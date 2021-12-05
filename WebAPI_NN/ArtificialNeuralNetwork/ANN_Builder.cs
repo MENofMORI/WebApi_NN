@@ -55,7 +55,27 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
                 List<double> ConvertedRecord = new List<double>();
                 foreach (string t in tablica)
                 {
-                    ConvertedRecord.Add(Double.Parse(t));
+                    List <string> bufor = t.Split(',').ToList();
+                    if (bufor.Count == 2 )
+                    {
+                        double valueBufor = Double.Parse(bufor[0]);
+                        int pow = bufor[1].Length;
+                        if (pow > 1)
+                        {
+                            double div = Double.Parse(bufor[1]);
+                            if (valueBufor > 0) valueBufor += div / Math.Pow(10, pow);
+                            else valueBufor -= div / Math.Pow(10, pow);
+                        }
+                        else
+                        {
+                            valueBufor += Double.Parse(bufor[1])/10;
+                        }
+                        ConvertedRecord.Add(valueBufor); // NORMAL
+                    }
+                    else
+                    {
+                        ConvertedRecord.Add(Double.Parse(t)); // NORMAL
+                    }
                 }
                 ListOfBias.Add(ConvertedRecord);
             }
@@ -71,7 +91,27 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
                     List<double> ConvertedRecord = new List<double>();
                     foreach (string t in tablica)
                     {
-                        ConvertedRecord.Add(Double.Parse(t));
+                        List<string> bufor = t.Split(',').ToList();
+                        if (bufor.Count == 2)
+                        {
+                            double valueBufor = Double.Parse(bufor[0]);
+                            int pow = bufor[1].Length;
+                            if (pow > 1)
+                            {
+                                double div = Double.Parse(bufor[1]);
+                                if (valueBufor > 0) valueBufor += div / Math.Pow(10, pow);
+                                else valueBufor -= div / Math.Pow(10, pow);
+                            }
+                            else
+                            {
+                                valueBufor += Double.Parse(bufor[1]) / 10;
+                            }
+                            ConvertedRecord.Add(valueBufor); // NORMAL
+                        }
+                        else
+                        {
+                            ConvertedRecord.Add(Double.Parse(t)); // NORMAL
+                        }
                     }
                     BuforLayer.Add(ConvertedRecord);
                 }
