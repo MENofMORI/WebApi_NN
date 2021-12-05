@@ -150,14 +150,13 @@ namespace WebAPI_NN.Repositories
             try
             {
                 NewBudget = await CreateBudget(newBudget, id);
-
+                if (NewBudget == null) return -201;
             }
             catch (Exception)
             {
-                return -1;
+                return -101;
             }
-if (NewBudget == null) return -1;
-
+            
             BudgetType SelectedBudgetType = await _context.BudgetTypes.FindAsync(10);
             Budget Budget_Month_income = await _context.Budgets
                 .Include(i => i.Type)
@@ -170,10 +169,7 @@ if (NewBudget == null) return -1;
                 IncomeBudget = Budget_Month_income.Amount;
                 if (IncomeBudget == 0) IncomeBudget = 1;
             }
-            else
-            {
-                IncomeBudget = 1;
-            }
+            else IncomeBudget = 1;
 
             SelectedBudgetType = await _context.BudgetTypes.FindAsync(11);
             Budget Budget_Budget = await _context.Budgets
@@ -186,10 +182,7 @@ if (NewBudget == null) return -1;
             {
                 TotalBudget = Budget_Budget.Amount;
             }
-            else
-            {
-                TotalBudget = 1;
-            }
+            else TotalBudget = 1;
 
             List<double> InpuData = new List<double>();
             for (int index = 0; index < 9; index++) InpuData.Add(0);
@@ -210,15 +203,7 @@ if (NewBudget == null) return -1;
             InpuData.Add(IncomeBudget / 10000D);
             InpuData.Add(TotalBudget / 200000D);
 
-            try
-            {
-                await DeleteBudget(NewBudget.Id);
-            }
-            catch (NullReferenceException)
-            {
-                return -2;
-            }
-                
+            await DeleteBudget(NewBudget.Id);
 
             ANN_Builder ANNBuilder = new ANN_Builder();
             NeuralNetworkEngin ANN = ANNBuilder.GetANN();

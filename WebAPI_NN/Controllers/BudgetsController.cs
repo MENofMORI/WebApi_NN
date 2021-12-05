@@ -35,7 +35,7 @@ namespace WebApi.Controllers
             return await _repository.GetBudget(id);
         }
 
-        // GET: api/budget/contents/{id}
+        // GET: api/budget/type/{id}
         [HttpGet("budget/type/{id}")]
         public async Task<IEnumerable<Budget>> GetSpecyficBudgets(int id)
         {
@@ -69,20 +69,23 @@ namespace WebApi.Controllers
             return await _repository.GetBudgetTypes();
         }
 
-        [HttpPost("availableCash")]
+
+        // POST: api/availableCash/{id}
+        [HttpGet("availableCash")]
         public async Task<double> GetAvailableForALastIncomeBudget()
         {
             return await _repository.GetAvailableForALastIncomeBudget();
         }
 
-        [HttpPost("unavailableTypeCash")]
+        // POST: api/unavailableTypeCash/{id}
+        [HttpGet("unavailableTypeCash")]
         public async Task<List<double>> GetListOfAvailableBudgetByTypeForALastIncomeBudget()
         {
             return await _repository.GetListOfAvailableBudgetByTypeForALastIncomeBudget();
         }
 
-        // GET: api/prediction
-        [HttpPost("prediction")]
+        // POST: api/prediction
+        [HttpPut("prediction/{id}")]
         public async Task<double> GetPrediction(int id, Budget budget)
         {
             return await _repository.GetPrediction(id, budget);
