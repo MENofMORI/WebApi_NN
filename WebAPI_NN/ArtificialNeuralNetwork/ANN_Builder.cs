@@ -14,7 +14,11 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
             try
             {
                 string path = @"DataNN.csv";
-                fileLines = Properties.Resources.ANN_Knowledge.Split(System.Environment.NewLine.ToCharArray());
+                fileLines = Properties.Resources.ANN_Knowledge.Split('\n');
+                for (int i = 0; i < fileLines.Length; i++)
+                {
+                    fileLines[i] = fileLines[i].Trim('\r');
+                }
                 iSFile = true;
             }
             catch (Exception)
@@ -75,18 +79,6 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
             }
 
             NeuralNetworkEngin engin = new NeuralNetworkEngin(ListOfNumerOfNeurons, NameOfActivationF, ListOfWages, ListOfBias);
-            //List<double> input = new List<double> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1D, 0.1D };
-            //List<double> ans = engin.WyliczOdpowiedz(input);
-            //Console.WriteLine($"DATA[ 0 ] =  {ans[0]}");
-
-            //input = new List<double> { 1, 1, 1, 1, 1, 0, 0, 0, 0, 0.1D, 0.1D };
-            //ans = engin.WyliczOdpowiedz(input);
-            //Console.WriteLine($"DATA[ 1 ] =  {ans[0]}");
-
-            //input = new List<double> { 0, 0, 0, 0, 1, 1, 1, 1, 1, 0.1D, 0.1D };
-            //ans = engin.WyliczOdpowiedz(input);
-            //Console.WriteLine($"DATA[ 2 ] =  {ans[0]}");
-
             return engin;
         }
     }

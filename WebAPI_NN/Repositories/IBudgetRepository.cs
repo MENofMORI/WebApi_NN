@@ -15,6 +15,9 @@ namespace WebAPI_NN.Repositories
         Task DeleteBudget(int id);
         Task<IEnumerable<BudgetType>> GetBudgetTypes();
 
+
+        Task<double> GetAvailableForALastIncomeBudget();
+        Task<List<double>> GetListOfAvailableBudgetByTypeForALastIncomeBudget();
         Task<double> GetPrediction(int id, Budget budget);
     }
 }

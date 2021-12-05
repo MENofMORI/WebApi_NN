@@ -69,8 +69,20 @@ namespace WebApi.Controllers
             return await _repository.GetBudgetTypes();
         }
 
+        [HttpPost("availableCash")]
+        public async Task<double> GetAvailableForALastIncomeBudget()
+        {
+            return await _repository.GetAvailableForALastIncomeBudget();
+        }
+
+        [HttpPost("unavailableTypeCash")]
+        public async Task<List<double>> GetListOfAvailableBudgetByTypeForALastIncomeBudget()
+        {
+            return await _repository.GetListOfAvailableBudgetByTypeForALastIncomeBudget();
+        }
+
         // GET: api/prediction
-        [HttpGet("prediction")]
+        [HttpPost("prediction")]
         public async Task<double> GetPrediction(int id, Budget budget)
         {
             return await _repository.GetPrediction(id, budget);

@@ -67,6 +67,83 @@ namespace WebAPI_NN.Repositories
             return await _context.BudgetTypes.ToListAsync();
         }
 
+        public async Task<double> GetAvailableForALastIncomeBudget()
+        {
+            BudgetType SelectedBudgetType = await _context.BudgetTypes.FindAsync(10);
+            Budget Budget_Month_income = await _context.Budgets
+                .Include(i => i.Type)
+                .Where(w => w.Type == SelectedBudgetType)
+                .OrderBy(o => o.AddedData)
+                .LastOrDefaultAsync();
+            double AvailableCash;
+            if (Budget_Month_income != null)
+            {
+                AvailableCash = Budget_Month_income.Amount;
+            }
+            else
+            {
+                AvailableCash = 0;
+            }
+
+            List<double> OutcomesData = new List<double>();
+            for (int index = 0; index < 9; index++) OutcomesData.Add(0);
+
+            int i = 0;
+            while (true)
+            {
+                List<Budget> f = (List<Budget>)await GetBudgetsWithSpecyficBudgetType(i + 1);
+                foreach (Budget budget in f)
+                {
+                    if (budget.AddedData < Budget_Month_income.AddedData) continue;
+                    OutcomesData[i] += budget.Amount;
+                }
+                if (++i >= OutcomesData.Count) break;
+            }
+
+            foreach (double outcome in OutcomesData) AvailableCash -= outcome;
+
+            return AvailableCash;
+        }
+
+        public async Task<List<double>> GetListOfAvailableBudgetByTypeForALastIncomeBudget()
+        {
+            BudgetType SelectedBudgetType = await _context.BudgetTypes.FindAsync(10);
+            Budget Budget_Month_income = await _context.Budgets
+                .Include(i => i.Type)
+                .Where(w => w.Type == SelectedBudgetType)
+                .OrderBy(o => o.AddedData)
+                .LastOrDefaultAsync();
+            double IncomeBudget;
+            if (Budget_Month_income != null)
+            {
+                IncomeBudget = Budget_Month_income.Amount;
+                if (IncomeBudget == 0) IncomeBudget = 1;
+            }
+            else
+            {
+                IncomeBudget = 1;
+            }
+
+            List<double> OutcomesData = new List<double>();
+            for (int index = 0; index < 9; index++) OutcomesData.Add(0);
+
+            int i = 0;
+            while (true)
+            {
+                List<Budget> f = (List<Budget>)await GetBudgetsWithSpecyficBudgetType(i + 1);
+                foreach (Budget budget in f)
+                {
+                    if (budget.AddedData < Budget_Month_income.AddedData) continue;
+                    OutcomesData[i] += budget.Amount;
+                }
+                OutcomesData[i] /= IncomeBudget;
+                if (++i >= OutcomesData.Count) break;
+            }
+
+
+            return OutcomesData;
+        }
+
         public async Task<double> GetPrediction(int id, Budget newBudget)
         {
             Budget NewBudget = await CreateBudget(newBudget, id);
@@ -76,7 +153,7 @@ namespace WebAPI_NN.Repositories
                 .Include(i => i.Type)
                 .Where(w => w.Type == SelectedBudgetType)
                 .OrderBy(o => o.AddedData)
-                .FirstOrDefaultAsync();
+                .LastOrDefaultAsync();
             double IncomeBudget;
             if (Budget_Month_income != null)
             {
@@ -93,7 +170,7 @@ namespace WebAPI_NN.Repositories
                 .Include(i => i.Type)
                 .Where(w => w.Type == SelectedBudgetType)
                 .OrderBy(o => o.AddedData)
-                .FirstOrDefaultAsync();
+                .LastOrDefaultAsync();
             double TotalBudget;
             if (Budget_Budget != null)
             {
@@ -104,11 +181,12 @@ namespace WebAPI_NN.Repositories
                 TotalBudget = 0;
             }
 
-            List<double> InpuData = new List<double>(9);
+            List<double> InpuData = new List<double>();
+            for (int index = 0; index < 9; index++) InpuData.Add(0);
+
             int i = 0;
             while(true)
             {
-                InpuData[i] = 0;
                 List<Budget> f = (List<Budget>) await GetBudgetsWithSpecyficBudgetType(i+1);
                 foreach (Budget budget in f)
                 {
