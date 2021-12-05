@@ -146,7 +146,17 @@ namespace WebAPI_NN.Repositories
 
         public async Task<double> GetPrediction(int id, Budget newBudget)
         {
-            Budget NewBudget = await CreateBudget(newBudget, id);
+            Budget NewBudget;
+            try
+            {
+                NewBudget = await CreateBudget(newBudget, id);
+
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+if (NewBudget == null) return -1;
 
             BudgetType SelectedBudgetType = await _context.BudgetTypes.FindAsync(10);
             Budget Budget_Month_income = await _context.Budgets
@@ -178,7 +188,7 @@ namespace WebAPI_NN.Repositories
             }
             else
             {
-                TotalBudget = 0;
+                TotalBudget = 1;
             }
 
             List<double> InpuData = new List<double>();
@@ -200,7 +210,15 @@ namespace WebAPI_NN.Repositories
             InpuData.Add(IncomeBudget / 10000D);
             InpuData.Add(TotalBudget / 200000D);
 
-            await DeleteBudget(NewBudget.Id);
+            try
+            {
+                await DeleteBudget(NewBudget.Id);
+            }
+            catch (NullReferenceException)
+            {
+                return -2;
+            }
+                
 
             ANN_Builder ANNBuilder = new ANN_Builder();
             NeuralNetworkEngin ANN = ANNBuilder.GetANN();
