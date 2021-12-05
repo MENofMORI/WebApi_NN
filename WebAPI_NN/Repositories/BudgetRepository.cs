@@ -197,6 +197,7 @@ namespace WebAPI_NN.Repositories
                 {
                     if (budget.AddedData < Budget_Month_income.AddedData) continue;
                     InpuData[i] += budget.Amount;
+                    Console.WriteLine($"BUFOR: budget{budget.Type.Type}  value{budget.Amount} ");
                 }
                 InpuData[i] /= IncomeBudget;
                 if (++i >= InpuData.Count) break;
@@ -209,6 +210,7 @@ namespace WebAPI_NN.Repositories
 
             ANN_Builder ANNBuilder = new ANN_Builder();
             NeuralNetworkEngin ANN = ANNBuilder.GetANN();
+            Console.WriteLine($"{ANN.test()}");
 
             List<double> ListAnsware = ANN.WyliczOdpowiedz(InpuData);
             return ListAnsware[0];

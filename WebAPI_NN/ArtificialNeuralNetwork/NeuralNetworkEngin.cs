@@ -29,6 +29,12 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
             this.WygenerujMacierzWejsc();
             this.WygenerujMacierzWyjsc();
         }
+
+        public string test()
+        {
+            return $"{MacierzWag[0].ToString()}";
+        }
+
         private void WybierzFunkcjeAktywacji(string nazwaFunkcji)
         {
             switch (nazwaFunkcji)
