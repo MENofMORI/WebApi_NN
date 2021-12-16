@@ -215,5 +215,17 @@ namespace WebAPI_NN.Repositories
             List<double> ListAnsware = ANN.WyliczOdpowiedz(InpuData);
             return ListAnsware[0];
         }
+
+        public async Task<double> GetLastSebastian()
+        {
+            BudgetType SelectedBudgetType = await _context.BudgetTypes.FindAsync(10);
+            Budget Budget_Month_income = await _context.Budgets
+                .Include(i => i.Type)
+                .Where(w => w.Type == SelectedBudgetType)
+                .OrderBy(o => o.AddedData)
+                .LastOrDefaultAsync();
+
+            return Budget_Month_income.Amount;
+        }
     }
 }

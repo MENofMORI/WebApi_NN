@@ -9,7 +9,7 @@ namespace WebAPI_NN.Model
     {
         public int Id { get; set; }
         public string Description { get; set; }
-        public int Amount { get; set; }
+        public double Amount { get; set; }
         public DateTime AddedData { get; set; }
         public BudgetType Type { get; set; }
     }

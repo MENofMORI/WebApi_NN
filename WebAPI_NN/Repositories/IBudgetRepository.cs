@@ -14,7 +14,7 @@ namespace WebAPI_NN.Repositories
         Task<Budget> CreateBudget(Budget budget, int id);
         Task DeleteBudget(int id);
         Task<IEnumerable<BudgetType>> GetBudgetTypes();
-
+        Task<double> GetLastSebastian();
 
         Task<double> GetAvailableForALastIncomeBudget();
         Task<List<double>> GetListOfAvailableBudgetByTypeForALastIncomeBudget();
