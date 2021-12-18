@@ -65,6 +65,7 @@ namespace WebAPI_NN
             app.UseCors(cors =>
                 cors.AllowAnyMethod()
                     .AllowAnyHeader()
+                    .AllowAnyOrigin()
                     .SetIsOriginAllowed(origin => true)
                     .AllowCredentials());
         }
