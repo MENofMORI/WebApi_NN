@@ -21,6 +21,8 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
 
         public NeuralNetworkEngin(List<int> macierzLiczbNeuronow, string F, List<List<List<double>>> macierzWag, List<List<double>> macierzBiasow)
         {
+            Console.WriteLine($"NeuralNetworkEngin constructor start ");
+
             WybierzFunkcjeAktywacji(F);
             this.UstawMacierzLiczbNeuronow(macierzLiczbNeuronow);
             MacierzWag = macierzWag;
@@ -28,6 +30,8 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
 
             this.WygenerujMacierzWejsc();
             this.WygenerujMacierzWyjsc();
+
+            Console.WriteLine($"NeuralNetworkEngin constructor complete ");
         }
 
         public string test()

@@ -30,6 +30,8 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
             int LineCounter = 0;
             string NameOfActivationF = fileLines.GetValue(LineCounter++).ToString();
 
+            Console.WriteLine($"Log 1 ");
+
             List<int> ListOfNumerOfNeurons;
             try
             {
@@ -46,6 +48,8 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
             {
                 return null;
             }
+
+            Console.WriteLine($"Log 2 ");
 
             List<List<double>> ListOfBias = new List<List<double>>();
             for (int i = 0; i < ListOfNumerOfNeurons.Count - 1; i++)
@@ -79,6 +83,8 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
                 }
                 ListOfBias.Add(ConvertedRecord);
             }
+
+            Console.WriteLine($"Log 3 ");
 
             List<List<List<double>>> ListOfWages = new List<List<List<double>>>();
             for (int i = 0; i < ListOfNumerOfNeurons.Count - 1; i++)
@@ -117,6 +123,8 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
                 }
                 ListOfWages.Add(BuforLayer);
             }
+
+            Console.WriteLine($"Log 4 ");
 
             NeuralNetworkEngin engin = new NeuralNetworkEngin(ListOfNumerOfNeurons, NameOfActivationF, ListOfWages, ListOfBias);
             return engin;
