@@ -36,6 +36,7 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
             try
             {
                 string LineWithSpecyficData = fileLines.GetValue(LineCounter++).ToString();
+                Console.WriteLine($"{LineWithSpecyficData}");
                 string[] tablica = LineWithSpecyficData.Split(';');
                 List<int> ConvertedRecord = new List<int>();
                 foreach (string t in tablica)
@@ -44,8 +45,10 @@ namespace WebAPI_NN.ArtificialNeuralNetwork
                 }
                 ListOfNumerOfNeurons = ConvertedRecord;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
                 return null;
             }
 
