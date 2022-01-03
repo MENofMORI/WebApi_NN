@@ -173,6 +173,8 @@ namespace WebAPI_NN.Repositories
             }
             else IncomeBudget = 1;
 
+            Console.WriteLine($"Gotten last budget ");
+
             SelectedBudgetType = await _context.BudgetTypes.FindAsync(11);
             Budget Budget_Budget = await _context.Budgets
                 .Include(i => i.Type)
@@ -185,6 +187,8 @@ namespace WebAPI_NN.Repositories
                 TotalBudget = Budget_Budget.Amount;
             }
             else TotalBudget = 1;
+
+            Console.WriteLine($"Gotten budget budget ");
 
             List<double> InpuData = new List<double>();
             for (int index = 0; index < 9; index++) InpuData.Add(0);
@@ -207,6 +211,8 @@ namespace WebAPI_NN.Repositories
             InpuData.Add(TotalBudget / 200000D);
 
             await DeleteBudget(NewBudget.Id);
+
+            Console.WriteLine($"Deleted new budget ");
 
             ANN_Builder ANNBuilder = new ANN_Builder();
             NeuralNetworkEngin ANN = ANNBuilder.GetANN();
